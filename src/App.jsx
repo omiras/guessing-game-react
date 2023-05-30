@@ -27,33 +27,27 @@ function App() {
   console.log('Has cambiado el estado verdad ?? vuelvo a renderizar el componente');
 
   const handleClick = () => {
-
-    // actualizamos previousGuesses. Es un array de numbers
-    setPreviousGuesses([...previousGuesses, currentGuess]);
-
-    // limpiar el input
+    const updatedGuesses = [...previousGuesses, currentGuess];
+    setPreviousGuesses(updatedGuesses);
     setCurrentGuess('');
 
-    // comprobar 
     if (currentGuess > randomNumber) {
       setMessage('The number is lower');
-      // decrementamos el número de intento. No podemos modificar directamente la variable remainingGuesses 
-      setRemainingGuesses(remainingGuesses - 1);
     } else if (currentGuess < randomNumber) {
       setMessage('The number is higher');
-      // decrementamos el número de intento. No podemos modificar directamente la variable remainingGuesses 
-      setRemainingGuesses(remainingGuesses - 1);
     }
-  }
+
+    setRemainingGuesses(remainingGuesses - 1);
+  };
 
   // si la variable de estado es 0, es que ya hemos perdido!
   if (remainingGuesses === 0) {
     return <h1>Lo siento! el número era {randomNumber}</h1>
   }
 
-  // Si la útlima posición del número añadido a previousGuesses es justamente el número correcto, entonces hemos ganado
-  if (randomNumber == previousGuesses[previousGuesses.length - 1]) {
-    return <h1>Has ganado!</h1>
+  // Si el array de preivousGuesses incluye en algún momento el número correcto, entonces podemos decir uqe hemos ganado
+  if (previousGuesses.includes(randomNumber)) {
+    return <h1>¡Has ganado!</h1>;
   }
 
   return (
