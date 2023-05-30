@@ -11,7 +11,7 @@ function App() {
   const [randomNumber, setRandomNumber] = useState(generateRandomNumber())
 
   // tendremos que decrementar uno cada vez que el usuario introduzca un número
-  const [remainingGuesses, setRemainingGuesses] = useState(1);
+  const [remainingGuesses, setRemainingGuesses] = useState(2);
 
   // [4, 40, 20]
   const [previousGuesses, setPreviousGuesses] = useState([]);
@@ -28,9 +28,6 @@ function App() {
 
   const handleClick = () => {
 
-    // decrementamos el número de intento. No podemos modificar directamente la variable remainingGuesses 
-    setRemainingGuesses(remainingGuesses - 1);
-
     // actualizamos previousGuesses. Es un array de numbers
     setPreviousGuesses([...previousGuesses, currentGuess]);
 
@@ -40,8 +37,12 @@ function App() {
     // comprobar 
     if (currentGuess > randomNumber) {
       setMessage('The number is lower');
-    } else {
+      // decrementamos el número de intento. No podemos modificar directamente la variable remainingGuesses 
+      setRemainingGuesses(remainingGuesses - 1);
+    } else if (currentGuess < randomNumber) {
       setMessage('The number is higher');
+      // decrementamos el número de intento. No podemos modificar directamente la variable remainingGuesses 
+      setRemainingGuesses(remainingGuesses - 1);
     }
   }
 
@@ -50,8 +51,10 @@ function App() {
     return <h1>Lo siento! el número era {randomNumber}</h1>
   }
 
-
-
+  // Si la útlima posición del número añadido a previousGuesses es justamente el número correcto, entonces hemos ganado
+  if (randomNumber == previousGuesses[previousGuesses.length - 1]) {
+    return <h1>Has ganado!</h1>
+  }
 
   return (
     <>
@@ -61,13 +64,13 @@ function App() {
       <br />
       <div id="wrapper">
         <label htmlFor="guessField" id="guess">Guess a number</label>
-        <input type="number" id="guessField" class="guessField" max={100} min={0} value={currentGuess} onChange={(e) => setCurrentGuess(e.target.value)} />
-        <button class="guessSubmit" onClick={handleClick}>Submit a Guess</button>
+        <input type="number" id="guessField" className="guessField" max={100} min={0} value={currentGuess} onChange={(e) => setCurrentGuess(e.target.value)} />
+        <button className="guessSubmit" onClick={handleClick}>Submit a Guess</button>
 
-        <div class="resultParas">
-          <p>Previous Guesses: <span class="guesses">{previousGuesses.join(' / ')}</span></p>
-          <p>Guesses Remaining: <span class="lastResult">{remainingGuesses}</span></p>
-          <p class="lowOrHi">{message}</p>
+        <div className="resultParas">
+          <p>Previous Guesses: <span className="guesses">{previousGuesses.join(' / ')}</span></p>
+          <p>Guesses Remaining: <span className="lastResult">{remainingGuesses}</span></p>
+          <p className="lowOrHi">{message}</p>
         </div>
       </div>
     </>
