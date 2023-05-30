@@ -33,11 +33,14 @@ function App() {
 
     if (currentGuess > randomNumber) {
       setMessage('The number is lower');
+      setRemainingGuesses(remainingGuesses - 1);
+
     } else if (currentGuess < randomNumber) {
       setMessage('The number is higher');
+      setRemainingGuesses(remainingGuesses - 1);
     }
+    // else ... entonces ya tenemos el número correcto!
 
-    setRemainingGuesses(remainingGuesses - 1);
   };
 
   // si la variable de estado es 0, es que ya hemos perdido!
