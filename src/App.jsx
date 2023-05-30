@@ -27,7 +27,7 @@ function App() {
   console.log('Has cambiado el estado verdad ?? vuelvo a renderizar el componente');
 
   const handleClick = () => {
-    const updatedGuesses = [...previousGuesses, currentGuess];
+    const updatedGuesses = [...previousGuesses, +currentGuess];
     setPreviousGuesses(updatedGuesses);
     setCurrentGuess('');
 
